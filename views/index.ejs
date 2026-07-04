@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Compiled Tailwind CSS -->
+    <link rel="stylesheet" href="/stylesheet/style.css">
+
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main w-full min-h-screen bg-black text-white p-6">
+        <!-- Form -->
+        <div class="form max-w-md p-4 bg-zinc-900 rounded-xl border border-zinc-800">
+            <form action="/create" method="POST" class="flex flex-col gap-3">
+
+                <input type="text" name="title" placeholder="Enter your note title"
+                    class="px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-white text-sm focus:outline-none focus:ring-1 focus:ring-zinc-700 ">
+
+                <textarea name="description" placeholder="Enter your description"
+                    class="px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-white text-sm focus:outline-none focus:ring-1 focus:ring-zinc-700 resize-none h-24"></textarea>
+
+                <input type="submit" value="Submit"
+                    class="px-4 py-2 bg-white text-black font-semibold rounded-lg text-sm hover:bg-zinc-200 transition-colors cursor-pointer">
+
+            </form>
+        </div>
+
+        <!-- Tasks Container -->
+        <div class="tasks mt-6 flex flex-wrap gap-4">
+            <% if (files.length > 0) { %>
+                <% files.forEach((val) => { %>
+                    <div class="p-3 bg-zinc-900 rounded-lg border border-zinc-800 w-72">
+                        <h1 class="text-white text-2xl font-semibold tracking-tight truncate">
+                            <span>Text here</span>
+                        </h1>
+                        <a href="#" class="text-red-500 inline-block mt-3 hover:underline">
+                            Read more...
+                        </a>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="p-3 bg-zinc-900 rounded-lg border border-zinc-800 w-72 text-zinc-400">
+                    No task done
+                </div>
+            <% } %>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
