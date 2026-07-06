@@ -1,0 +1,19 @@
+{
+  "name": "auth",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "jsonwebtokens.js",
+  "scripts": {
+    "start": "nodemon jsonwebtokens.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cookies-parser": "^1.2.0",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3"
+  }
+}
