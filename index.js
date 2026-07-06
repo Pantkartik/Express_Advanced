@@ -18,4 +18,10 @@ app.get("/home", (req, res) => {
 app.post('/create',(req,res)=>{
     fs.writeFile(`./files/${req.body.title.split(' ').join(' ')}`)    
 })
+
+app.get("/files/:filename",(res,req)=>{
+    fs.readFile(`./files/${req.param.filename}`,'utf-8',(err,files)=>{
+        res.render('show')
+    })
+})
 app.listen(PORT)
