@@ -17,7 +17,9 @@ app.get('/jwt-login',(req,res)=>{
     res.send({ message: 'This is the jwt login page', token })
     console.log(token)
 })
-
+app.get('/read',(req,res)=>{
+    let data=jwt.verify(req.cookies.token,"secret@123")
+})
 
 app.listen(PORT,()=>{
     console.log(`Server is running on port ${PORT}`)
