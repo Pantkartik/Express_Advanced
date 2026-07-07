@@ -1,0 +1,7 @@
+create login
+1. mongoose
+2. schema
+3. model
+4. usercreate->password->hash
+5. jwt tokenization
+6. dcryption and email verification
