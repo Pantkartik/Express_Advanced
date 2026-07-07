@@ -23,11 +23,26 @@ Express_Advanced/
 |   |-- package.json
 |   `-- THEORY.md             # Conceptual notes on databases and Mongoose
 |
-`-- Auth/                     # Authentication module
-    |-- auth.js               # Cookie handling and Bcrypt hashing/comparison
-    |-- jsonwebtokens.js      # JWT token generation and verification
-    |-- flow_auth.md          # Notes on authentication vs authorization
-    `-- package.json
+|-- Auth/                     # Authentication pattern experiments
+|   |-- auth.js               # Cookie handling and Bcrypt hashing/comparison
+|   |-- jsonwebtokens.js      # JWT token generation and verification
+|   |-- flow_auth.md          # Notes on authentication vs authorization
+|   `-- package.json
+|
+|-- auth-login/               # Full user registration and login system
+|   |-- app.js                # Express server with all auth routes
+|   |-- models/
+|   |   `-- usermodel.js      # Mongoose schema for users
+|   |-- views/
+|   |   |-- index.ejs         # Registration form
+|   |   |-- home.ejs          # User dashboard showing all registered users
+|   |   |-- forget.ejs        # Forgot password page
+|   |   `-- support.ejs       # Support coming soon page
+|   |-- public/               # Static assets
+|   |-- flow.txt              # Implementation flow notes
+|   `-- package.json
+|
+`-- Express_server/           # Express fundamentals experiments
 ```
 
 ---
@@ -175,7 +190,55 @@ npm start       # runs on port 8000
 
 ---
 
-## Getting Started
+### auth-login — Full Registration and Login System
+
+Located in `auth-login/`, this is a complete end-to-end user authentication implementation combining all previous concepts: MongoDB persistence, Bcrypt password hashing, JWT token generation, and cookie-based session management.
+
+**API Routes**
+
+| Route          | Method | Description                                              |
+|----------------|--------|----------------------------------------------------------|
+| `/create`      | GET    | Renders the registration form (`index.ejs`)              |
+| `/create`      | POST   | Creates a user, hashes password, sets JWT cookie, redirects to `/user` |
+| `/user`        | GET    | Fetches all users from MongoDB and renders the dashboard |
+| `/forget`      | GET    | Renders the forgot password page                         |
+| `/support`     | GET    | Renders the support page                                 |
+| `/logout`      | POST   | Clears the JWT cookie and redirects to `/create`         |
+
+**Registration Flow**
+
+```
+User submits form
+  --> POST /create
+  --> Extract { username, email, password, age } from req.body
+  --> bcrypt.genSalt(10)  -->  bcrypt.hash(password, salt)
+  --> userModel.create({ username, email, password: hash, age })
+  --> jwt.sign({ email }, SECRET)  -->  res.cookie("token", token)
+  --> res.redirect("/user")
+  --> GET /user  -->  userModel.find()  -->  res.render("home", { users })
+```
+
+**User Schema**
+
+```javascript
+{
+    username: String,
+    email:    String,
+    password: String,   // bcrypt hash, never plaintext
+    age:      Number
+}
+```
+
+**Stack:** Express 5, Mongoose 9, Bcrypt 5, jsonwebtoken 9, cookie-parser, EJS 6, MongoDB 7
+
+**Start**
+
+```bash
+cd auth-login
+npm start       # runs on port 3000
+```
+
+---
 
 ### Prerequisites
 
@@ -203,6 +266,9 @@ cd DB && npm install
 
 # Auth module
 cd ../Auth && npm install
+
+# auth-login module
+cd ../auth-login && npm install
 ```
 
 ### Running Modules
@@ -218,6 +284,9 @@ cd DB && npm start
 
 # Auth server (port 8000)
 cd Auth && npm start
+
+# auth-login server (port 3000) — requires MongoDB running
+cd auth-login && npm start
 ```
 
 ---
@@ -233,6 +302,7 @@ cd Auth && npm start
 - Cookie-based session management
 - Password hashing and verification with Bcrypt
 - Stateless authentication with JSON Web Tokens
+- End-to-end user registration with hashed passwords and JWT sessions
 
 ---
 
