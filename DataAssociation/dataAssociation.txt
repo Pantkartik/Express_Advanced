@@ -1,0 +1,9 @@
+Its a way of association or making the relation b/w the data place where it is store
+
+1. Embedding data
+    In this a actual copy of data is used to make redireting of the main product or the data
+
+2. Referencing data 
+    It is a way making a reference id pointing to a defined data which is directly associated to the data
+
+    
